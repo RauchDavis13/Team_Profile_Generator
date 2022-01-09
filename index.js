@@ -1,20 +1,20 @@
+// TODO: Include packages needed for this application
+
 const inquirer = require('inquirer');
 // const Employee = require('./lib/Employee.js');
 const Engineer = require('./lib/Engineer.js');
 const Intern = require('./lib/Intern.js');
 const Manager = require('./lib/Manager.js');
-let employeeArray =[];
-
-// TODO: Include packages needed for this application
-const page_template = require('./src/page-template');
-const writeFile = require('./src/generate-site');
+const teamArray =[];
+const generatePage = require('./src/page-template');
+const { writeFile, copyFile } = require('./src/generate-site');
+// const writeFile = require('./src/generate-site');
   
 // TODO: Create an array of questions for user input
 // generates answers for Employee
 const addEmployee = () => {
 
-  //const employee = new Employee;
-  // uses inquire to prompt user for a series of questions, and the answers will be returned
+  // uses inquire to prompt user for a series of Employee questions, and the answers will be returned
   return inquirer.prompt([
     {
       type: 'list',
@@ -73,9 +73,6 @@ const addEmployee = () => {
       role: answers.role
     }
 
-    // employeeArray.push(employee);
-    // console.log(employee);
-    // addTeamMember();
     if (answers.role === "Manager") {
 
       addManager(employee);
@@ -112,18 +109,15 @@ const addIntern = (employee) => {
   ])
   .then(answers => {
     const intern = new Intern(employee.name, employee.id, employee.email, employee.role, answers.school)
-    employeeArray.push(intern);
+    teamArray.push(intern);
     // console.log(intern);
-    console.log(employeeArray);
-    // addTeamMember();
+    console.log(teamArray);
+    addTeamMember(teamArray);
     })
 };
 
 const addManager = (employee) => {
   console.log(employee);
-
-  const manager = new Manager;
- 
 
   return inquirer.prompt([
     { 
@@ -144,9 +138,9 @@ const addManager = (employee) => {
     
     const manager = new Manager(employee.name, employee.id, employee.email, employee.role, answers.officeNum)
     
-    employeeArray.push(manager);
-    console.log(employeeArray);
-    // addTeamMember();
+    teamArray.push(manager);
+    console.log(teamArray);
+    addTeamMember(teamArray);
     })
 };
 
@@ -171,10 +165,46 @@ const addEngineer = (employee) => {
   ])
   .then(answers => {
     const engineer = new Engineer(employee.name, employee.id, employee.email, employee.role, answers.gitHub)
-    employeeArray.push(engineer);
-    console.log(employeeArray);
-    // addTeamMember();
+    teamArray.push(engineer);
+    console.log(teamArray);
+    addTeamMember(teamArray);
     })
+};
+
+const addTeamMember = (teamArray) => {
+
+  inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'continue',
+      message: 'Would you like to add another team member?'
+      },
+  ])
+  .then( answers => {
+    if ( answers.continue ) {
+      addEmployee();
+    } else {
+      console.log(teamArray);
+      return teamArray;
+      }
+  })
+
+  .then(teamArray => {
+    return generatePage(teamArray);
+  })
+  .then(pageHTML => {
+    return writeFile(pageHTML);
+  })
+  .then(writeFileResponse => {
+    console.log(writeFileResponse);
+    return copyFile();
+  })
+  .then(copyFileResponse => {
+    console.log(copyFileResponse);
+  })
+  .catch(err => {
+    console.log(err);
+  })
 };
 
 
