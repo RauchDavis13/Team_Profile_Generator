@@ -1,22 +1,26 @@
-# README-maker
+# Team Profile Generator
 
-## Bootcamp: Challenge 9 - Create app for README.md
+## Bootcamp: Challenge 10 - Create CLI app to generate HTML based Team Profile
 
-The purpose of this assignment, is to create a working app for a user to populate a template to build a README.md file through a series of questions asked.
+The purpose of this assignment, is to create a working app for a user to populate a template to build an HTML based Team Profile file through a series of questions asked.
 
-- Motivation: Test what has been learned through practical application and testing of Javascript, Node and Node modules including "inquirer", related to the construct of this assignment
+- Motivation: Test what has been learned through practical application and testing of Javascript, CLI, OOP, TDD, Node and Node modules including "inquirer", related to the construct of this assignment
 
-- Project: Create an app to create a README.md file.  The file will be filled with answers from user promtps for GitHub ID, email, project name, project description, license used (if any), command instructions for dependencies and tests, and user supplied instructions for 3rd party usage and contribution.
+- Project: Create an app to create a Team Portfolion html file.  The file will be filled with answers from user promtps to initially ask for the team manager info, and then options to add an ulimited amount of team Engineers and/or Inters.  Upon selecting no further team members, and html page will be generated showing the team members.
 
-- Problem Solved: User is prompted to answer a series of questions from the command prompt and a README.md file is generated.  In addition, a video is supplied from the author that walks a user through the process of using this app.
+- Problem Solved: User is prompted to answer a series of questions from the command prompt and a Team Profie html file is generated.  In addition, a video is supplied from the author that walks a user through the process of using this app.
 
-- Lessons Learned: Many. The course work in Module 9 supplied a good frame work of how to make the main js file (index.js) using inquirer questions/answers, as well as how to use promise statements for sending data to other files in the app for specific functions.  However, Module 9 used inquire.prompt differently than this assignment requires, in that Module 9 had one main array for a first series of user questions, then an additional array for a user to enter in multiple projects.  This project required only one array of questions.  The remaining data flow and file creation was similar.   The syntax of the "promise" process is tricky and needs repetition for better understanding of how this flow works, and to reduce/prevent syntax errors in usage.  As this was on the main core teachings in this latest module, it was easy to get stuck with incorrect syntax preventing data flow from one file to the next.  Be careful on usage of console.log statements within the .then statements, as it's easy to get errors and prevent data flow.  When the README.md file is generated, the file is written as a markdown template where temperate literals and links are visible.  To view it as a "readme" file, it must be viewed in preview mode.
+- Lessons Learned: Currently, the most difficult assignment to date.  Balancing for time, this project is being entered incomplete as I can't find a way to fix the correction for the data coming into the page-template being undefined.  The remaining code has been setup to generate an HTML page based on team manager and additional team members, in a card format from Boot Strap.  Discouraging since the previous assignment entered was scored very well.  Testing with Jest has been completed and works correctly.
 
-## Files
+## Folders and Files
 
 - README.md:  Explains usage and functionality of this app
 
-- redme-guide.md:  Contains recommendations on preferred README.md information
+- /__tests__: Employee.test, Engineer.test., Intern.test and Mananger.test all work to correctly test the functions in the related files in the /lib folder
+
+- /lib: Contains the files for Employee, Engineer, Inter and Manager, where data is passed in from index.js using inquirer based questions
+ 
+- /dist: Folder where created HTML and CSS files reside
 
 - gitignore: Contains files names that are not passed to Github for usage with the app
 
@@ -24,54 +28,46 @@ The purpose of this assignment, is to create a working app for a user to populat
 
 - package.json:  Node module file
 
-- index.js: This is where the app begins.  It brings in the "inquirer" node to facilitate a question / answer array by using "require, as well as "require"ing the path of the generateMarkdown.js file.  The "answers" or answerData, is console logged for the viewer to see the data they supplied and then sent to the generateMarkdown.js file via writeFile.
+- index.js: This is where the app begins.  It brings in the "inquirer" node to facilitate a question / answer array by using "require, as well as "require"ing the path of the generateMarkdown.js file.  The "answers" or teamArray, is console logged for the viewer to see the data they supplied and then sent to the page-template.js file  and also writeFile is used to create the HTML page.
 
-- generateMarkdown.js: Located in the /utils folder, the file starts with a series of 3 functions to
-```
- 1.) If the licence question from index.js does not equal "none", then bring in the license badge
- 2.) If the license question from index.js does not equal "none", then bring in the license link
- 3.) If the license question from index.js does not equal "none", then return the license section of README
- ``` 
- The data from index.js is fed to the various temperate literals to populate these fields when the README.md is created.
+- page-template.js: Located in the /lib folder, the file is setup to create team member cards through Bootstrap, then returned as the HTML structure for the page.
 
-- createMarkdown.js: Located in the /utils folder, this file takes the writeFile(generateMarkdown) info and writes the README.md file.  Upon completion, there is a command line message indicating a successful completion
-
-- /output folder:  This is where the created README.md file will be contained
+- generate-site.js: Located in the /lib folder, this file takes the writeFile(generatePage) info and writes the README.md file.  Upon completion, there is a command line message indicating a successful completion
 
 - /images: Holds images used for examples shown in this file's README.md
 
 ## Acceptance Criteria
 
-All criteria have been met
 
-- WHEN I am prompted for information about my application repository / THEN a high-quality, professional README.md is generated with the title of my project and sections entitled Description, Table of Contents, Installation, Usage, License, Contributing, Tests, and Questions: 
+- WHEN I am prompted for my team members and their information / 
+THEN an HTML file is generated that displays a nicely formatted team roster: This has not successfully been done, as the data feeding to the page-template.js file is not being recongnized.
 
-- WHEN I enter my project title / THEN this is displayed as the title of the README: The user supplied project title is generated as the title for the README.md file.
+- WHEN I click on an email address in the HTML / THEN my default email program opens and populates the TO field of the email with the address:  Due to the data not being recognized, this is not working
 
-- WHEN I enter a description, installation instructions, usage information, contribution guidelines, and test instructions / THEN this information is added to the sections of the README entitled Description, Installation, Usage, Contributing, and TestsColor: 
+- WHEN I click on the GitHub username / THEN that GitHub profile opens in a new tab:  Due to the data being recognized, this is not working
 
-- WHEN I choose a license for my application from a list of options / THEN a badge for that license is added near the top of the README and a notice is added to the section of the README entitled License that explains which license the application is covered under: 
-- WHEN I enter my GitHub username / THEN this is added to the section of the README entitiled Questions, with a ink to my GitHub profile: 
+- WHEN I start the application / THEN I am prompted to enter the team manager’s name, employee ID, email address, and office number:  Successfully completed.  User is asked for team manager's info, and if additional engineers and/or inters are selected, corresponging information requests are made for each team member
 
-- WHEN I enter my email address / THEN this is added to the section of the README entitiled Questions, with instructions on how to reach me with additional questions: 
+- WHEN I enter the team manager’s name, employee ID, email address, and office number / THEN I am presented with a menu with the option to add an engineer or an intern or to finish building my team:  Successfully completed.  Once the team manager's info has been entered, the user has the option of adding an engineer, intern, or ending the entry of new team members.
 
-- WHEN I click on the links in the Table of Contents / THEN I am taken to the corresponding section of the README: 
+- WHEN I select the engineer  / THEN I am prompted to enter the engineer’s name, ID, email, and GitHub username, and I am taken back to the menu:  Successfuly completed.  For every engineer team member added, the info above is requested.  Upon completion, the user is taken back to the menu of entering an engineer, inter on ending adding additional team members.
 
-### All criteria have been met
+- WHEN I select the intern option / THEN I am prompted to enter the intern’s name, ID, email, and school, and I am taken back to the menu:  Successfuly completed.  For every intern team member added, the info above is requested.  Upon completion, the user is taken back to the menu of entering an engineer, inter on ending adding additional team members.
 
-User prompted questions, which will populate the README file
+- WHEN I decide to finish building my team / THEN I exit the application, and the HTML is generated:  Not working due to the data coming up as undefined in the page-template.js file.
 
-![AcceptanceCriteria-UserQuestions](./images/userQuestions.png)
-
-Populated README.md file viewed in Preview
-
-![AcceptanceCriteria-READMEdisplay](./images/README-display.png)
 
 ## GitHub repository...
-https://github.com/RauchDavis13/README-maker.git
+https://github.com/RauchDavis13/Team_Profile_Generator.git
 
-## Video Link (Screencastify)
-https://watch.screencastify.com/v/X5EZvwANwYm0RJO1bp48
+## Video Links (Screencastify)
+
+Video for TESTS
+https://watch.screencastify.com/v/G6ZDqonR6GvDHeDg3Fdi
+
+Video for invoking application and usage
+https://watch.screencastify.com/v/cHUH4imUTJFQoAOtZf94
+
 
 
 ## Thank you's
@@ -82,10 +78,7 @@ Kris Renaldi (TA)
 Sandra Smith (Tutor)
 
 Fellow students...
-Chris McCormack
 Robert Evanic
-K-Von Madison
 Adam Howard
-Edwared McCarthy
 
 
